@@ -16,7 +16,7 @@ class Solver():
         for j in range(0, i0):
             cell1 = grid.state[i][j]
             cell2 = grid.state[i-1][j]
-                while j > k-i*n-1
+            while j > k-i*n-1:
                 swap(grid, cell1, cell2)
 
     @staticmethod
@@ -29,8 +29,8 @@ class Solver():
                 return (i0, j0)
             
     @staticmethod
-    def go_cell(grid):        
-        j == k-i*n-1
+    def go_cell(grid, k):        
+        j == k-i*grid.n-1
         i == (1/n)*(k-j-1)
 
     
