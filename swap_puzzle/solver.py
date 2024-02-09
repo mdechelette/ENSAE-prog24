@@ -41,7 +41,7 @@ class Solver():
   
     """
     QUESTION 3 :
-        La complexité est de (n*m)^2. 
+        La complexité est de o(n*m)^2. 
     """
 
     """

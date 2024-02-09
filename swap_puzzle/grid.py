@@ -130,4 +130,20 @@ class Grid():
             grid = Grid(m, n, initial_state)
         return grid
 
+    # QUESTION 6:
+
+    def to_hashable(self):  # Retourne une représentation hashable de la grille 
+        return (tuple(tuple(line) for line in self.state))
+
+    @staticmethod
+    def from_hashable(hashable_state: tuple):  
+        content = [list(row) for row in hashable_state]
+        m = len(content)
+        n = len(content[0])
+        return Grid(m, n, content)
+
+    # QUESTION 7
+
+    
+
 
