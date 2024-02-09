@@ -1,6 +1,9 @@
 """
 This is the graph module. It contains a minimalistic Graph class.
 """
+from collections import deque
+import grid
+
 
 class Graph:
     """
@@ -36,7 +39,7 @@ class Graph:
         self.nb_nodes = len(nodes)
         self.nb_edges = 0
         self.edges = []
-        
+
     def __str__(self):
         """
         Prints the graph as a list of neighbors for each node (one per line)
@@ -82,6 +85,18 @@ class Graph:
         self.edges.append((node1, node2))
 
     def bfs(self, src, dst): 
+        # Le site de wikipedia nous permet de voir la structure attendue de la fonction BFS
+        if src == dst:
+            return [src]
+        f = deque()
+        f.append([src])
+        visited = []
+        while f:
+            path = f.popleft()
+            node = path[-1]
+            if node not in visited:
+                f.append(node)
+                visited(node)
         """
         Finds a shortest path from src to dst by BFS.  
 
@@ -98,7 +113,7 @@ class Graph:
             The shortest path from src to dst. Returns None if dst is not reachable from src
         """ 
         # TODO: implement this function (and remove the line "raise NotImplementedError").
-        raise NotImplementedError
+
 
     @classmethod
     def graph_from_file(cls, file_name):
@@ -131,4 +146,3 @@ class Graph:
                 else:
                     raise Exception("Format incorrect")
         return graph
-

@@ -78,19 +78,14 @@ class Grid():
         cell1, cell2: tuple[int]
             The two cells to swap. They must be in the format (i, j) where i is the line and j the column number of the cell. 
         """
-        corcas1 = [cell1[0], cell1[1]]
-        corcas2 = [cell2[0], cell2[1]]
         if cell1[0] == cell2[0]:
             if cell1[1] == cell2[1] or cell1[1] == cell2[1]+1 or cell1[1] == cell2[1]-1:
-                self.state[cell1[0]][cell1[1]] = self.state[corcas2[0]][corcas2[1]]
-                self.state[cell2[0]][cell2[1]] = self.state[corcas1[0]][corcas1[1]]
+                self.state[cell1[0]][cell1[1]],self.state[cell2[0]][cell2[1]] = self.state[cell2[0]][cell2[1]],self.state[cell1[0]][cell1[1]]
         elif cell1[1] == cell2[1]:
             if cell1[0] == cell2[0] or cell1[0] == cell2[0]+1 or cell1[0] == cell2[0]-1:
-                self.state[cell1[0]][cell1[1]] = self.state[corcas2[0]][corcas2[1]]
-                self.state[cell2[0]][cell2[1]] = self.state[corcas1[0]][corcas1[1]]
+                self.state[cell1[0]][cell1[1]],self.state[cell2[0]][cell2[1]] = self.state[cell2[0]][cell2[1]],self.state[cell1[0]][cell1[1]]
         else:
-            raise ValueError
-
+            raise Exception(f"Les cases {cell1} et {cell2} ne peuvent être échangées.")
        
         """
         Executes a sequence of swaps. 
@@ -103,8 +98,8 @@ class Grid():
         """
        
     def swap_seq(self, cell_pair_list):
-        for k in range(len(cell_pair_list)):
-            swap(cell_pair_list[k][0], cell_pair_list[k][1])
+        for k in cell_pair_list:
+            self.swap(k[0], k[1])
 
 
     @classmethod
