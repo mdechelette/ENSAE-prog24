@@ -3,6 +3,9 @@ This is the grid module. It contains the Grid class and its associated methods.
 """
 
 import random
+from graph import Graph
+from itertools import permutations
+
 
 class Grid():
     """
@@ -52,8 +55,6 @@ class Grid():
         Returns a representation of the grid with number of rows and columns.
         """
         return f"<grid.Grid: m={self.m}, n={self.n}>"
-
-  
         
         """
         Checks is the current state of the grid is sorte and returns the answer as a boolean.
@@ -101,7 +102,6 @@ class Grid():
         for k in cell_pair_list:
             self.swap(k[0], k[1])
 
-
     @classmethod
     def grid_from_file(cls, file_name): 
         """
@@ -144,6 +144,25 @@ class Grid():
 
     # QUESTION 7
 
-    
+    def generates_all_possible_grid(self) -> Graph:  # Construit le graphe de tous les états possibles de la grille
+        # Le code ci-dessous génère toutes les grilles possibles avec le contenu 1,2,3,4,5,6...
+        grids = []
+        items = list(range(1, self.m*self.n+1))
+        for p in permutations(items):
+            grids.append(Grid(self.m, self.n, [list(p[i*self.n:(i+1)*self.n]) for i in range(self.m)]))
 
+        # On crée un graphe avec toutes les grilles possibles
+        graph = Graph([grid.to_hashable() for grid in grids])
+
+        # Calcul du nombre de noeuds et d'arête du graphe créé
+        for i in range(len(grids)):  # pour toutes les grilles 
+            for line in range(self.m):  # pour toutes les lignes 
+                for column in range(self.n):  # pour toutes les colonnes
+                    for line_add, column_add in [(0, 1), (1, 0), (-1, 0), (0, -1)]:  # pour toutes les opérations possibles
+                        if 0 <= line+line_add < self.m and 0 <= column+column_add < self.n:  # si la case est dans la grille 
+                            hashable = grids[i].to_hashable()
+                            grids[i].swap((line, column), (line+line_add, column+column_add))
+                            graph.add_edge(hashable, grids[i].to_hashable())
+        return graph
+                            
 
