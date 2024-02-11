@@ -96,8 +96,13 @@ class Graph:
             path = f.popleft()
             node = path[-1]
             if node not in visited:
-                f.append(node)
-                visited(node)
+                for t in self.graph[node]:
+                    new_path = list(path)
+                    new_path.append(t)
+                    f.append(new_path)
+                    if t == dst: 
+                        return new_path
+                visited.append(node)
         return
         """
         Finds a shortest path from src to dst by BFS.  
@@ -146,3 +151,36 @@ class Graph:
                 else:
                     raise Exception("Format incorrect")
         return graph
+
+    # QUESTION 8 - PARTIE 2 
+    # REDÉFINITION DE LA FONCTION BFS
+
+    def bfs_optimized(self, src, dst, generate=False): 
+        if src == dst:
+            return [src]
+        f = deque()
+        f.append([src])
+        visited = []
+        while f:
+            path = f.popleft()
+            node = path[-1]
+            if node not in visited:
+                neighbours = self.graph.get(node, None)
+                if generate:
+                    neighbours = grid.Grid.from_hashable(node).generate_neighbours()
+                    self.add_children(node, neighbours)
+                for t in neighbours:
+                    new_path = list(path)
+                    new_path.append(t)
+                    f.append(new_path)
+                    if t == dst:
+                        return new_path
+                visited.append(node)
+        return
+
+
+# Compléter la fonction bfs nécessite de définir une nouvelle fonction qui génère le graphe de la grille obtenue en swappant 2 cellules adjacentes.
+
+def add_children(self, parent, list: list):
+    for i in list: 
+        self.add_edge(parent, i)
