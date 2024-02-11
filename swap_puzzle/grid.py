@@ -132,7 +132,7 @@ class Grid():
 
     # QUESTION 6:
 
-    def to_hashable(self):  # Retourne une représentation hashable de la grille 
+    def to_hashable(self):  # Retourne une représentation hashable de la grille -> conversion en tuple car c'est hashable
         return (tuple(tuple(line) for line in self.state))
 
     @staticmethod
@@ -142,7 +142,7 @@ class Grid():
         n = len(content[0])
         return Grid(m, n, content)
 
-    # QUESTION 7
+    # QUESTION 7 - PARTIE 1
 
     def generates_all_possible_grid(self) -> Graph:  # Construit le graphe de tous les états possibles de la grille
         # Le code ci-dessous génère toutes les grilles possibles avec le contenu 1,2,3,4,5,6...
@@ -164,5 +164,7 @@ class Grid():
                             grids[i].swap((line, column), (line+line_add, column+column_add))
                             graph.add_edge(hashable, grids[i].to_hashable())
         return graph
+
+
                             
 

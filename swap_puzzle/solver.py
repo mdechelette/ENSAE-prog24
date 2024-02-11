@@ -1,5 +1,6 @@
 from grid import Grid
 from matplotlib import pyplot as plt
+import graph
 
 
 class Solver():
@@ -61,3 +62,39 @@ class Solver():
             for j in range(self.m):
                 ax.text(j, i, str(self.state[i][j], va='center', ha='center'))
         plt.show()
+
+    # QUESTION 7 - PARTIE 2 :
+    # On veut que la fonction get_bfs_solution résolve la grille et donne la séquence des swaps effectués avec un format de complexité o(n*m)
+    """ Paramètres : 
+        * La grille à résoudre. 
+
+        Retourne : 
+        * Une liste de swaps, chaque swap étant un tuple de 2 cellules. 
+        Format : [((i1, j1), (i2, j2)), ((i1', j1'), (i2', j2')),...] """
+
+    def get_bfs_solution(grid: Grid) -> list:  # On veut que la fonction prenne en entrée une grille et renvoie une solution sous forme de liste
+        possible_graph = grid.generate_all_possible_grid()
+        src = grid.to_hashable()
+        dst = Grid(grid.m, grid.n).to_hashable()
+        path = possible_graph.bfs(src, dst)
+        solution = Solver.path_to_swap(path)
+        grid.swap_seq(solution)
+        return solution
+
+    """ Pour compléter la fonction ci-dessus, il faut en définir une nouvelle qui transforme un chemin obtenu avec la méthode BFS en une séquence de swaps. 
+    Paramètres : une liste de noeuds obtenus avec la méthode bfs. 
+    Retourne : une liste de swaps """
+
+    def path_to_swap(path: list) -> list:
+        solution = []
+        for i in range(1, len(path)):  # Pour chaque élément du chemin obtenu, en partant du deuxième
+            for line in range(len(path[i])):  # Pour chaque ligne
+                for column in range(len(path[i][0])):  # Pour chaque colonne
+                    if path[i][line][column] != path[i-1][line][column]:  # Si la case à changé
+                        #  On cherche alors la case qui a changé
+                        for dest_line in range(len(path[i])):  # Pour chaque ligne
+                            for dest_column in range(len(path[i][0])):  # Pour chaque colonne
+                                if path[i][line][column] == path[i-1][dest_line][dest_column]:  # On a trouvé la case qui a changé
+                                    if not ((dest_line, dest_column), (line, column)) in solution:  # Si le swap n'est pas déjà dans la solution
+                                        solution.append(((line, column), (dest_line, dest_column)))  # On sauvegarde le swap
+        return solution

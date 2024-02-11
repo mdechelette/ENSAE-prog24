@@ -86,6 +86,7 @@ class Graph:
 
     def bfs(self, src, dst): 
         # Le site de wikipedia nous permet de voir la structure attendue de la fonction BFS
+        # La fonction BFS permet de trouver le chemin le plus court de la source à la destination
         if src == dst:
             return [src]
         f = deque()
@@ -97,6 +98,7 @@ class Graph:
             if node not in visited:
                 f.append(node)
                 visited(node)
+        return
         """
         Finds a shortest path from src to dst by BFS.  
 
@@ -112,8 +114,6 @@ class Graph:
         path: list[NodeType] | None
             The shortest path from src to dst. Returns None if dst is not reachable from src
         """ 
-        # TODO: implement this function (and remove the line "raise NotImplementedError").
-
 
     @classmethod
     def graph_from_file(cls, file_name):
