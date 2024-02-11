@@ -98,3 +98,12 @@ class Solver():
                                     if not ((dest_line, dest_column), (line, column)) in solution:  # Si le swap n'est pas déjà dans la solution
                                         solution.append(((line, column), (dest_line, dest_column)))  # On sauvegarde le swap
         return solution
+
+    def get_bfs_optimized_solution(grid: Grid) -> list:
+        src = grid.to_hashable()
+        dst = Grid(grid.m, grid.n).to_hashable()
+        search_graph = graph.Graph([src, dst])
+        path = search_graph.bfs(src, dst, True)
+        solution = Solver.path_to_swap(path)
+        grid.swap_seq(solution)
+        return solution
