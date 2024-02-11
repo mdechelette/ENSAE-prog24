@@ -42,7 +42,8 @@ class Solver():
   
     """
     QUESTION 3 :
-        La complexité est de o(n*m)^2. 
+        La complexité est de o(n*m)^2. La solution naïve semble peu optimale car elle nécessite de nombreux 
+        swaps. 
     """
 
     """
@@ -70,7 +71,10 @@ class Solver():
 
         Retourne : 
         * Une liste de swaps, chaque swap étant un tuple de 2 cellules. 
-        Format : [((i1, j1), (i2, j2)), ((i1', j1'), (i2', j2')),...] """
+        Format : [((i1, j1), (i2, j2)), ((i1', j1'), (i2', j2')),...]
+        
+        La fonction nouvellement définie est plus efficace et plus rapide que l'algorithme 
+        glouton défini précédemment. """
 
     def get_bfs_solution(grid: Grid) -> list:  # On veut que la fonction prenne en entrée une grille et renvoie une solution sous forme de liste
         possible_graph = grid.generate_all_possible_grid()
