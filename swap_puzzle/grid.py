@@ -154,6 +154,7 @@ class Grid():
         # On crée un graphe avec toutes les grilles possibles
         graph = Graph([grid.to_hashable() for grid in grids])
 
+    # QUESTION 7 - PARTIE 3 
         # Calcul du nombre de noeuds et d'arête du graphe créé
         for i in range(len(grids)):  # pour toutes les grilles 
             for line in range(self.m):  # pour toutes les lignes 

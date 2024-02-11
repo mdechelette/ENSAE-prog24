@@ -84,6 +84,7 @@ class Graph:
         self.nb_edges += 1
         self.edges.append((node1, node2))
 
+    # QUESTION 5 
     def bfs(self, src, dst): 
         # Le site de wikipedia nous permet de voir la structure attendue de la fonction BFS
         # La fonction BFS permet de trouver le chemin le plus court de la source à la destination
@@ -178,9 +179,8 @@ class Graph:
                 visited.append(node)
         return
 
+    # Compléter la fonction bfs nécessite de définir une nouvelle fonction qui génère le graphe de la grille obtenue en swappant 2 cellules adjacentes.
 
-# Compléter la fonction bfs nécessite de définir une nouvelle fonction qui génère le graphe de la grille obtenue en swappant 2 cellules adjacentes.
-
-def add_children(self, parent, list: list):
-    for i in list: 
-        self.add_edge(parent, i)
+    def add_children(self, parent, list: list):
+        for i in list: 
+            self.add_edge(parent, i)

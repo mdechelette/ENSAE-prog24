@@ -7,6 +7,7 @@ class Solver():
     """
     A solver class, to be implemented.
     """
+    # QUESTION 3 : 
     @staticmethod
     def get_naive_solution(grid: Grid) -> list:
         retour = []
@@ -42,16 +43,14 @@ class Solver():
   
     """
     QUESTION 3 :
-        La complexité est de o(n*m)^2. La solution naïve semble peu optimale car elle nécessite de nombreux 
-        swaps. 
+        La complexité est de o(n*m)^2. La solution naïve semble peu optimale car elle nécessite de nombreux swaps. 
     """
 
     """
             Solves the grid and returns the sequence of swaps at the format
             [((i1, j1), (i2, j2)), ((i1', j1'), (i2', j2')), ...].
             """
-    # TODO: implement this function (and remove the line "raise NotImplementedError").
-    # NOTE: you can add other methods and subclasses as much as necessary. The only thing imposed is the format of the solution returned.
+    
 
     """QUESTION 4:
     En utilisant la librairie matplotlib, on définit graph_solver qui représente la grille : """
@@ -63,6 +62,7 @@ class Solver():
             for j in range(self.m):
                 ax.text(j, i, str(self.state[i][j], va='center', ha='center'))
         plt.show()
+
 
     # QUESTION 7 - PARTIE 2 :
     # On veut que la fonction get_bfs_solution résolve la grille et donne la séquence des swaps effectués avec un format de complexité o(n*m)
@@ -102,6 +102,9 @@ class Solver():
                                     if not ((dest_line, dest_column), (line, column)) in solution:  # Si le swap n'est pas déjà dans la solution
                                         solution.append(((line, column), (dest_line, dest_column)))  # On sauvegarde le swap
         return solution
+
+
+    # QUESTION 8 PARTIE 3
 
     def get_bfs_optimized_solution(grid: Grid) -> list:
         src = grid.to_hashable()
