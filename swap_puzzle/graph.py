@@ -263,3 +263,21 @@ def compare_heuristique(grid1, grid2):
     else:
         return -1
 
+# Définition du chemin le plus court :
+
+def cheminPlusCourt(grid):
+       closedList = File()
+       openList = FilePrioritaire(comparateur = compareParHeuristique)
+       openList.ajouter(depart)
+       while openList != []
+           u = openList.defiler()
+           if u.x == objectif.x and u.y == objectif.y
+               reconstituerChemin(u)
+               terminer le programme
+           for v voisin de u dans g
+               if non(   v existe dans closedList
+                            ou v existe dans openList avec un coût inférieur)
+                    v.cout = u.cout +1 
+                    v.heuristique = v.cout + distance([v.x, v.y], [objectif.x, objectif.y])
+                    openList.ajouter(v)
+           closedList.ajouter(u)
