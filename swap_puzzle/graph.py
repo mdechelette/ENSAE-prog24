@@ -244,9 +244,21 @@ def PopminFile(f):
 #   Définition de l'heuristique :
 #   On cherche à définir la distance entre une matrice (noeud) et la matrice d'arrivée qui est triée en évaluant leurs différences : pour chaque coordonnées, on code 0 si c'est identique et 1 si c'est différent puis on additionne. 
 
-def Heuristique(grid):
-    k = 0
-    for line in range(grid.m):
-        for column in range(grid.n):
-            cell1 == (line, column)
-            if cell1 == 
+def heuristique(grid):
+    k = 0 # on note k la distance entre la matrice étudiée et la matrice triée
+    for i in range(grid.m):
+        for j in range(grid.n):
+            if grid.state[i][j] != i*n+j+1 :
+                k = k+1 # on ajoute 1 si le coef étudié est différent de celui du noeud d'arrivée
+    return k
+
+
+# Comparer les heuristiques :
+
+def compare_heuristique(grid1, grid2)
+       if heuristique(grid1) < heuristique(grid2):
+            return 1
+       elif heuristique(grid1) == heuristique(grid2): 
+            return 0
+       else:
+           return -1
