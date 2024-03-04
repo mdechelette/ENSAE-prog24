@@ -254,11 +254,12 @@ def heuristique(grid):
 
 
 # Comparer les heuristiques :
+# On compare la distance à la matrice triée de deux matrices quelconques
+def compare_heuristique(grid1, grid2):
+    if heuristique(grid1) < heuristique(grid2):
+        return 1 # Si la matrice 1 est plus proche de la matrice tricée que la 2, on obtient 1
+    elif heuristique(grid1) == heuristique(grid2): 
+        return 0
+    else:
+        return -1
 
-def compare_heuristique(grid1, grid2)
-       if heuristique(grid1) < heuristique(grid2):
-            return 1
-       elif heuristique(grid1) == heuristique(grid2): 
-            return 0
-       else:
-           return -1
