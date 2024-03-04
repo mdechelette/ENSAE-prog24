@@ -184,3 +184,58 @@ class Graph:
     def add_children(self, parent, list: list):
         for i in list: 
             self.add_edge(parent, i)
+
+
+    #  QUESTION 9 : A*
+"""
+    Structure nœud = {
+      x, y: Nombre
+      cout, heuristique: Nombre
+   }
+   depart = Nœud(x=_, y=_, cout=0, heuristique=0)
+   Fonction compareParHeuristique(n1:Nœud, n2:Nœud)
+       si n1.heuristique < n2.heuristique 
+           retourner 1
+       ou si n1.heuristique == n2.heuristique 
+           retourner 0
+       sinon
+           retourner -1
+   Fonction cheminPlusCourt(g:Graphe, objectif:Nœud, depart:Nœud)
+       closedList = File()
+       openList = FilePrioritaire(comparateur = compareParHeuristique)
+       openList.ajouter(depart)
+       tant que openList n'est pas vide
+           u = openList.defiler()
+           si u.x == objectif.x et u.y == objectif.y
+               reconstituerChemin(u)
+               terminer le programme
+           pour chaque voisin v de u dans g
+               si non(   v existe dans closedList
+                            ou v existe dans openList avec un coût inférieur)
+                    v.cout = u.cout +1 
+                    v.heuristique = v.cout + distance([v.x, v.y], [objectif.x, objectif.y])
+                    openList.ajouter(v)
+           closedList.ajouter(u)
+       terminer le programme (avec erreur)
+"""
+
+#  Définition d'une file de priorité : 
+
+import heapq
+
+
+def filePrioVide():
+    file = []
+    heapq.heapify(file)  # La fonction heapify permet d'accéder rapidement à l'élément le plus petit (ou le plus grand)
+    return file 
+
+
+def InsererFile(x, f):  #  Cette nouvelle fonction a pour objectif d'insérer l'élément x dans la file de priorité f 
+    heapq.heappush(f,x)  # La fonction heappush permet d'ajouter l'élément x à la file f
+
+
+def PopminFile(f):
+    if len(f) == 0:
+        return None
+    else:
+        return heapq.heappop(f)  # La fonction heappop extrait et renvoie l'élément de priorité minimale de la file de priorité "f". 
