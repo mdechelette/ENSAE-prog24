@@ -239,3 +239,14 @@ def PopminFile(f):
         return None
     else:
         return heapq.heappop(f)  # La fonction heappop extrait et renvoie l'élément de priorité minimale de la file de priorité "f". 
+
+
+#   Définition de l'heuristique :
+#   On cherche à définir la distance entre une matrice (noeud) et la matrice d'arrivée qui est triée en évaluant leurs différences : pour chaque coordonnées, on code 0 si c'est identique et 1 si c'est différent puis on additionne. 
+
+def Heuristique(grid):
+    k = 0
+    for line in range(grid.m):
+        for column in range(grid.n):
+            cell1 == (line, column)
+            if cell1 == 
