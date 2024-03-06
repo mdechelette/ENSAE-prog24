@@ -250,8 +250,8 @@ def heuristique(grid):
         for j in range(grid.n):
             if grid.state[i][j] != i*n+j+1 :
                 k = k+1 # on ajoute 1 si le coef étudié est différent de celui du noeud d'arrivée
-    return k
-
+    return k/2
+# On divise par 2 car on veut que l'heuristique soit inférieure ou égale au nombre de swaps nécessaires 
 
 # Comparer les heuristiques :
 # On compare la distance à la matrice triée de deux matrices quelconques
@@ -267,7 +267,7 @@ def compare_heuristique(grid1, grid2):
 
 def cheminPlusCourt(grid):
        closedList = File()
-       openList = FilePrioritaire(comparateur = compareParHeuristique)
+       openList = FilePrioritaire(comparateur = compare_heuristique)
        openList.ajouter(depart)
        while openList != []
            u = openList.defiler()
