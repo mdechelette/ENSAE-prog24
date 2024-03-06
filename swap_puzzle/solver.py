@@ -1,4 +1,5 @@
 from grid import Grid
+import matplotlib.pyplot as plt
 from matplotlib import pyplot as plt
 import graph
 
@@ -7,6 +8,9 @@ class Solver():
     """
     A solver class, to be implemented.
     """
+    def __init__(self, grid):
+        self.grid = grid
+
     # QUESTION 3 : 
     @staticmethod
     def get_naive_solution(grid: Grid) -> list:
@@ -28,17 +32,17 @@ class Solver():
             if i_min != ligne_visee:  # si la case ne se situe pas sur la bonne ligne
                 if i_min > ligne_visee:  # si la case est située trop bas par rapport à celle visée
                     grid.swap((i_min, j_min), (i_min-1, j_min))
-                    retour.append((i_min, j_min), (i_min-1, j_min))
+                    retour.append(((i_min, j_min), (i_min-1, j_min)))
                 else:  # si la case se situe trop haut par rapport à celle visée. 
                     grid.swap((i_min, j_min), (i_min+1, j_min))
-                    retour.append((i_min, j_min), (i_min+1, j_min))
+                    retour.append(((i_min, j_min), (i_min+1, j_min)))
             else:  # si on est sur la bonne ligne
                 if j_min > colonne_visee:  # si la case doit être déplacée vers la gauche 
                     grid.swap((i_min, j_min), (i_min, j_min-1))
-                    retour.append((i_min, j_min), (i_min, j_min-1))
+                    retour.append(((i_min, j_min), (i_min, j_min-1)))
                 else:  # si la case doit être déplacée vers la droite 
                     grid.swap((i_min, j_min), (i_min, j_min+1))
-                    retour.append((i_min, j_min), (i_min, j_min+1))
+                    retour.append(((i_min, j_min), (i_min, j_min+1)))
         return retour
   
     """
@@ -77,7 +81,7 @@ class Solver():
         glouton défini précédemment. """
 
     def get_bfs_solution(grid: Grid) -> list:  # On veut que la fonction prenne en entrée une grille et renvoie une solution sous forme de liste
-        possible_graph = grid.generate_all_possible_grid()
+        possible_graph = grid.generates_all_possible_grid()
         src = grid.to_hashable()
         dst = Grid(grid.m, grid.n).to_hashable()
         path = possible_graph.bfs(src, dst)

@@ -1,8 +1,9 @@
 # This will work if ran from the root folder ensae-prog24
 
 import sys
-import ast
 sys.path.append("swap_puzzle/")
+
+import ast
 
 import unittest
 from graph import Graph
