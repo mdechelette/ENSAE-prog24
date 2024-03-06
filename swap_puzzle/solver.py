@@ -113,4 +113,4 @@ class Solver():
         path = search_graph.bfs(src, dst, True)
         solution = Solver.path_to_swap(path)
         grid.swap_seq(solution)
-        return solution
+        return solution 

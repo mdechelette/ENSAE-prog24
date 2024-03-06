@@ -3,7 +3,7 @@ This is the grid module. It contains the Grid class and its associated methods.
 """
 
 import random
-from graph import Graph
+from graph import *
 from itertools import permutations
 
 
@@ -144,7 +144,7 @@ class Grid():
 
     # QUESTION 7 - PARTIE 1
 
-    def generates_all_possible_grid(self) -> Graph:  # Construit le graphe de tous les états possible de la grille
+    def generates_all_possible_grid(self):  # Construit le graphe de tous les états possible de la grille
         # Le code ci-dessous génère toutes les grilles possibles avec le contenu 1,2,3,4,5,6...
         grids = []
         items = list(range(1, self.m*self.n+1))
