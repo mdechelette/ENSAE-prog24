@@ -339,5 +339,5 @@ def cheminPlusCourt(grid):
                 openList.ajouter(v)
         closedList.ajouter(u)
 
-#définir la fonction reconstituerChemin
-#Definir une fonction pour nv_grille in closedList and nv_grille in openList avec un coût inférieur :
+# définir la fonction reconstituerChemin
+# Definir une fonction pour nv_grille in closedList and nv_grille in openList avec un coût inférieur :
