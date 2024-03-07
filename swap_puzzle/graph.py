@@ -3,7 +3,7 @@ This is the graph module. It contains a minimalistic Graph class.
 """
 from collections import deque
 import grid
-
+import heapq
 
 class Graph:
     """
@@ -221,8 +221,6 @@ class Graph:
 
 #  Définition d'une file de priorité : 
 
-import heapq
-
 
 def filePrioVide():
     file = []
@@ -280,3 +278,66 @@ def compare_heuristique(grid1, grid2):
                     v.heuristique = v.cout + distance([v.x, v.y], [objectif.x, objectif.y])
                     openList.ajouter(v)
            closedList.ajouter(u)"""
+
+
+def filePrioVide():
+    file = []
+    heapq.heapify(file)  # La fonction heapify permet d'accéder rapidement à l'élément le plus petit (ou le plus grand)
+    return file 
+
+
+def InsererFile(x, f):  #  Cette nouvelle fonction a pour objectif d'insérer l'élément x dans la file de priorité f 
+    heapq.heappush(f,(heuristique(x),x))  # La fonction heappush permet d'ajouter l'élément x à la file f
+#ajouter qqch qui trouve la priorité et met la grille au bon endroit
+
+def PopminFile(f):
+    if len(f) == 0:
+        return None
+    else:
+        return heapq.heappop(f)[1]  # La fonction heappop extrait et renvoie l'élément de priorité minimale de la file de priorité "f". On met [1] pour ne selectionner que la grille et pas son heuristique
+
+
+#   Définition de l'heuristique :
+#   On cherche à définir la distance entre une matrice (noeud) et la matrice d'arrivée qui est triée en évaluant leurs différences : pour chaque coordonnées, on code 0 si c'est identique et 1 si c'est différent puis on additionne. 
+
+def heuristique(grid):
+    k = 0 # on note k la distance entre la matrice étudiée et la matrice triée (le but)
+    for i in range(grid.m):
+        for j in range(grid.n):
+            if grid.state[i][j] != i*n+j+1 :
+                k = k+1 # on ajoute 1 si le coef étudié est différent de celui du noeud d'arrivée
+    return k/2
+# On divise par 2 car on veut que l'heuristique soit inférieure ou égale au nombre de swaps nécessaires 
+
+
+# Comparer les heuristiques :
+# On compare la distance à la matrice triée de deux matrices quelconques
+def compare_heuristique(grid1, grid2):
+    if heuristique(grid1) < heuristique(grid2):
+        return 1 # Si la matrice 1 est plus proche de la matrice triée que la 2, on obtient 1
+    elif heuristique(grid1) == heuristique(grid2): 
+        return 0
+    else:
+        return -1
+
+
+# Définition du chemin le plus court (A*):
+
+def cheminPlusCourt(grid):
+    closedList = File()
+    openList = filePrioVide() #la file doit être ordonnée en comparant les heuristiques (les plus faibles)
+    InsererFile(grid, openList) #jsp si c'est fait sur insererfile mais il faut peut etre comparer les heuristiques
+    while openList != [] :
+        grille_observe = PopminFile(openList)
+        if is_sorted(grille_observe) :
+            reconstituerChemin(grille_observe)
+            return reconstituerChemin(grille_observe)
+        for nv_grille in generate_neighbours(grille_observe) :
+            if (nv_grille in closedList and nv_grille in openList) :
+                v.cout = u.cout +1 
+                v.heuristique = v.cout + distance([v.x, v.y], [objectif.x, objectif.y])
+                openList.ajouter(v)
+        closedList.ajouter(u)
+
+#définir la fonction reconstituerChemin
+#Definir une fonction pour nv_grille in closedList and nv_grille in openList avec un coût inférieur :
