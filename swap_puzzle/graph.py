@@ -273,6 +273,7 @@ class Graph:
     #Définition de la fonction reconstituerChemin :
     #On veut que la fonction reconstitue le chemin le plus court
     def reconstituerChemin(self, gird, openListe):
+        to_hashable(grid)
 
 
 

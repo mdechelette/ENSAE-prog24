@@ -132,8 +132,8 @@ class Grid():
 
     # QUESTION 6:
 
-    def to_hashable(self):  # Retourne une représentation hashable de la grille -> conversion en tuple car c'est hashable
-        return (tuple(tuple(line) for line in self.state))
+    def to_hashable(self, grid):  # Retourne une représentation hashable de la grille -> conversion en tuple car c'est hashable
+        return (tuple(tuple(line) for line in grid))
 
     @staticmethod
     def from_hashable(hashable_state: tuple):  
