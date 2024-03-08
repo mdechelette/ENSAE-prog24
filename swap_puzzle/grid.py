@@ -5,6 +5,7 @@ This is the grid module. It contains the Grid class and its associated methods.
 import random
 from graph import *
 from itertools import permutations
+import heapq
 
 
 class Grid():
@@ -181,3 +182,123 @@ class Grid():
                         if new_grid_hashable not in result:
                             result.append(new_grid_hashable)
         return (result)
+
+
+
+        #  QUESTION 9 : A*
+    """
+        Structure nœud = {
+        x, y: Nombre
+        cout, heuristique: Nombre
+    }
+    depart = Nœud(x=_, y=_, cout=0, heuristique=0)
+    Fonction compareParHeuristique(n1:Nœud, n2:Nœud)
+        si n1.heuristique < n2.heuristique 
+            retourner 1
+        ou si n1.heuristique == n2.heuristique 
+            retourner 0
+        sinon
+            retourner -1
+    Fonction cheminPlusCourt(g:Graphe, objectif:Nœud, depart:Nœud)
+        closedList = File()
+        openList = FilePrioritaire(comparateur = compareParHeuristique)
+        openList.ajouter(depart)
+        tant que openList n'est pas vide
+            u = openList.defiler()
+            si u.x == objectif.x et u.y == objectif.y
+                reconstituerChemin(u)
+                terminer le programme
+            pour chaque voisin v de u dans g
+                si non(   v existe dans closedList
+                ou v existe dans openList avec un coût inférieur)
+                        v.cout = u.cout +1 
+                        v.heuristique = v.cout + distance([v.x, v.y], [objectif.x, objectif.y])
+                        openList.ajouter(v)
+            closedList.ajouter(u)
+        terminer le programme (avec erreur)
+    """
+
+    #  Définition d'une file de priorité : 
+    # c est le cout
+    # g est la distance à la source
+    # x est la grille observée 
+    # f est la file
+
+    def filePrioVide(self):
+        file = []
+        heapq.heapify(file)  # La fonction heapify permet d'accéder rapidement à l'élément le plus petit (ou le plus grand)
+        return file 
+
+
+    def InsererFile(self, f, c, g, x):  #  Cette nouvelle fonction a pour objectif d'insérer l'élément x dans la file de priorité f 
+        heapq.heappush(f,(c, g, x))  # La fonction heappush permet d'ajouter l'élément x à la file f
+    #ajouter qqch qui trouve la priorité et met la grille au bon endroit
+
+
+    def PopminFile(self, f):
+        if len(f) == 0:
+            return None
+        else:
+            return heapq.heappop(f)  # La fonction heappop extrait et renvoie l'élément de priorité minimale de la file de priorité "f". On met [1] pour ne selectionner que la grille et pas son heuristique
+
+
+    #   Définition de l'heuristique :
+    #   On cherche à définir la distance entre une matrice (noeud) et la matrice d'arrivée qui est triée en évaluant leurs différences : pour chaque coordonnées, on code 0 si c'est identique et 1 si c'est différent puis on additionne. 
+
+    def heuristique(self, grid):
+        k = 0 # on note k la distance entre la matrice étudiée et la matrice triée (le but)
+        for i in range(grid.m):
+            for j in range(grid.n):
+                if grid.state[i][j] != i*n+j+1 :
+                    k = k+1 # on ajoute 1 si le coef étudié est différent de celui du noeud d'arrivée
+        return k/2
+    # On divise par 2 car on veut que l'heuristique soit inférieure ou égale au nombre de swaps nécessaires 
+
+
+    # Comparer les heuristiques :
+    # On compare la distance à la matrice triée de deux matrices quelconques
+    def compare_heuristique(self, grid1, grid2):
+        if self.heuristique(grid1) < self.heuristique(grid2):
+            return 1 # Si la matrice 1 est plus proche de la matrice triée que la 2, on obtient 1
+        elif self.heuristique(grid1) == self.heuristique(grid2): 
+            return 0
+        else:
+            return -1
+
+
+    #Définition de la fonction reconstituerChemin :
+    #On veut que la fonction reconstitue le chemin le plus court
+
+    def reconstituerChemin(self, grid, dictionnaire):
+        grille_actuelle = self.to_hashable(grid)
+        liste_etapes = []
+        while grille_actuelle != None :
+            liste_etapes.append(grille_actuelle)
+            grille_actuelle = dictionnaire[grille_actuelle]
+        return liste_etapes[::-1]
+
+
+    # Définition du chemin le plus court (A*):
+
+    def cheminPlusCourt(self, src):
+        closedList = deque()
+        openList = self.filePrioVide() #la file doit être ordonnée en comparant les heuristiques (les plus faibles)
+        self.InsererFile(openList, 0, 0, src) #jsp si c'est fait sur insererfile mais il faut peut etre comparer les heuristiques
+        src_h = self.to_hashable(src)
+        dictionnaire = {src_h: None}
+        while openList != []:
+            pop = self.PopminFile(openList)
+            grille_observe = pop[2]
+            closedList.append(grille_observe) #on la met dans la closed liste parce qu'on la visite 
+            if self.is_sorted(grille_observe) :
+                self.reconstituerChemin(grille_observe)
+                return self.reconstituerChemin(grille_observe)
+            for nv_grille in self.generate_neighbours(grille_observe) :
+                if nv_grille not in closedList and nv_grille not in openList:
+                    g = pop[1] + 1 
+                    c = g + self.heuristique(nv_grille)
+                    self.InsererFile(openList, c, g, nv_grille)
+                    grille_h = self.to_hashable(nv_grille)
+                    dictionnaire[grille_h] = self.to_hashable(grille_observe)
+
+    #définir une fonction cout : f=h+g
