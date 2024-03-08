@@ -118,3 +118,6 @@ class Solver():
         solution = Solver.path_to_swap(path)
         grid.swap_seq(solution)
         return solution 
+
+
+        

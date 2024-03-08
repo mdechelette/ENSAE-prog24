@@ -60,10 +60,10 @@ class Grid():
         Checks is the current state of the grid is sorte and returns the answer as a boolean.
         """
    
-    def is_sorted(self):
+    def is_sorted(self, grid):
         L = []
-        for i in range(self.m):
-            L = L + self.state[i]
+        for i in range(len(grid)):
+            L = L + grid[i]
         for k in range(len(L)-1):
             if L[k] > L[k+1]:
                 return (False)
