@@ -265,19 +265,8 @@ class Grid():
                     k = k+1 # on ajoute 1 si le coef étudié est différent de celui du noeud d'arrivée
         return k/2
     # On divise par 2 car on veut que l'heuristique soit inférieure ou égale au nombre de swaps nécessaires 
-
-   """ #l'heursistique1 n'est pas assez précise (pour la grille4 en particulier) donc on utilise la distance de Manhattan 
+    #l'heursistique1 n'est pas assez précise (pour la grille4 en particulier) donc on utilise la distance de Manhattan 
     
-    def distance_manhattan
-
-    def heuristique2(self, grid):
-        k = 0 # on note k la distance entre la matrice étudiée et la matrice triée (le but)
-            for i in range(self.m):
-                for j in range(self.n):
-                    if grid[i][j] != i*self.n+j+1 :
-                        k = k+1 # on ajoute 1 si le coef étudié est différent de celui du noeud d'arrivée
-            return k/2
-"""
 
     # Comparer les heuristiques :
     # On compare la distance à la matrice triée de deux matrices quelconques
