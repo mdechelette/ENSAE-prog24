@@ -170,17 +170,20 @@ class Grid():
     # QUESTION 8 - PARTIE 1 :
     # On redéfinit une nouvelle fonction qui génère le voisin de la grille
 
-    def generate_neighbours(self):
+    def generate_neighbours(self, grid,mode):
         result = []
         for line in range(self.m): 
             for column in range(self.n):
                 for line_add, column_add in [(0, 1), (1, 0), (-1, 0), (0, -1)]:
                     if 0 <= line+line_add < self.m and 0 <= column+column_add < self.n:
-                        new_grid = Grid(self.m, self.n, [list(row) for row in self.state])
+                        new_grid = Grid(self.m, self.n, [list(row) for row in grid])
                         new_grid.swap((line, column), (line+line_add, column+column_add))
-                        new_grid_hashable = new_grid.to_hashable()
+                        new_grid_hashable = self.to_hashable(new_grid.state)
                         if new_grid_hashable not in result:
-                            result.append(new_grid_hashable)
+                            if mode == 'BFS':
+                                result.append(new_grid_hashable)
+                            else: 
+                                result.append(new_grid.state)
         return (result)
 
 
@@ -242,18 +245,39 @@ class Grid():
             return heapq.heappop(f)  # La fonction heappop extrait et renvoie l'élément de priorité minimale de la file de priorité "f". On met [1] pour ne selectionner que la grille et pas son heuristique
 
 
-    #   Définition de l'heuristique :
+#On défiinit une fonction qui donne la grille triée
+    
+    def grille_parfaite(self):
+        grid = []
+        nblist = [i for i in range(1,self.m*self.n+1)]
+        for i in range(0,len(nblist),self.n):
+            grid.append(list(nblist[i:i+self.n]))
+        return grid
+
+#   Définition de l'heuristique :
     #   On cherche à définir la distance entre une matrice (noeud) et la matrice d'arrivée qui est triée en évaluant leurs différences : pour chaque coordonnées, on code 0 si c'est identique et 1 si c'est différent puis on additionne. 
 
-    def heuristique(self, grid):
+    def heuristique1(self, grid):
         k = 0 # on note k la distance entre la matrice étudiée et la matrice triée (le but)
-        for i in range(grid.m):
-            for j in range(grid.n):
-                if grid.state[i][j] != i*n+j+1 :
+        for i in range(self.m):
+            for j in range(self.n):
+                if grid[i][j] != i*self.n+j+1 :
                     k = k+1 # on ajoute 1 si le coef étudié est différent de celui du noeud d'arrivée
         return k/2
     # On divise par 2 car on veut que l'heuristique soit inférieure ou égale au nombre de swaps nécessaires 
 
+   """ #l'heursistique1 n'est pas assez précise (pour la grille4 en particulier) donc on utilise la distance de Manhattan 
+    
+    def distance_manhattan
+
+    def heuristique2(self, grid):
+        k = 0 # on note k la distance entre la matrice étudiée et la matrice triée (le but)
+            for i in range(self.m):
+                for j in range(self.n):
+                    if grid[i][j] != i*self.n+j+1 :
+                        k = k+1 # on ajoute 1 si le coef étudié est différent de celui du noeud d'arrivée
+            return k/2
+"""
 
     # Comparer les heuristiques :
     # On compare la distance à la matrice triée de deux matrices quelconques
@@ -285,15 +309,16 @@ class Grid():
         openList = self.filePrioVide() #la file doit être ordonnée en comparant les heuristiques (les plus faibles)
         self.InsererFile(openList, 0, 0, src) #jsp si c'est fait sur insererfile mais il faut peut etre comparer les heuristiques
         src_h = self.to_hashable(src)
+        dst = self.grille_parfaite()
         dictionnaire = {src_h: None}
         while openList != []:
             pop = self.PopminFile(openList)
             grille_observe = pop[2]
             closedList.append(grille_observe) #on la met dans la closed liste parce qu'on la visite 
-            if self.is_sorted(grille_observe) :
-                self.reconstituerChemin(grille_observe)
-                return self.reconstituerChemin(grille_observe)
-            for nv_grille in self.generate_neighbours(grille_observe) :
+            if grille_observe == dst:
+                self.reconstituerChemin(grille_observe, dictionnaire)
+                return self.reconstituerChemin(grille_observe, dictionnaire)
+            for nv_grille in self.generate_neighbours(grille_observe,'A*') :
                 if nv_grille not in closedList and nv_grille not in openList:
                     g = pop[1] + 1 
                     c = g + self.heuristique(nv_grille)

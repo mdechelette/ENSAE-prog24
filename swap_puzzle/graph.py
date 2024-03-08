@@ -3,9 +3,6 @@ This is the graph module. It contains a minimalistic Graph class.
 """
 from collections import deque
 import grid
-import heapq
-from grid import is_sorted 
-from grid import generate_neighbours
 
 
 class Graph:
@@ -171,7 +168,7 @@ class Graph:
             if node not in visited:
                 neighbours = self.graph.get(node, None)
                 if generate:
-                    neighbours = grid.Grid.from_hashable(node).generate_neighbours()
+                    neighbours = grid.Grid.from_hashable(node).generate_neighbours(grid.state, 'BFS')
                     self.add_children(node, neighbours)
                 for t in neighbours:
                     new_path = list(path)
