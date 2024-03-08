@@ -272,19 +272,23 @@ class Graph:
 
     #Définition de la fonction reconstituerChemin :
     #On veut que la fonction reconstitue le chemin le plus court
-    def reconstituerChemin(self, gird, openListe):
-        to_hashable(grid)
-
-
-
+    def reconstituerChemin(self, grid, dictionnaire):
+        grille_actuelle = to_hashable(grid)
+        liste_etapes = []
+        while grille_actuelle != None :
+            liste_etapes.append(grille_actuelle)
+            grille_actuelle = dictionnaire[grille_actuelle]
+        return liste_etapes[::-1]
 
 
     # Définition du chemin le plus court (A*):
 
-    def cheminPlusCourt(self, src, dst):
+    def cheminPlusCourt(self, src):
         closedList = deque()
         openList = self.filePrioVide() #la file doit être ordonnée en comparant les heuristiques (les plus faibles)
         self.InsererFile(openList, 0, 0, src) #jsp si c'est fait sur insererfile mais il faut peut etre comparer les heuristiques
+        src_h = to_hashable(src)
+        dictionnaire = { src_h : None }
         while openList != [] :
             pop = PopminFile(openList)
             grille_observe = pop[2]
@@ -297,5 +301,7 @@ class Graph:
                     g = pop[1] + 1 
                     c = g + heuristique(nv_grille)
                     self.InsererFile(openList, c, g, nv_grille)
+                    grille_h = to_hashable(nv_grille)
+                    dictionnaire[grille_h] = to_hashable(grille_observe)
 
     #définir une fonction cout : f=h+g
