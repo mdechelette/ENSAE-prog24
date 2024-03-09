@@ -56,7 +56,7 @@ class Solver():
             """
     
 
-    """QUE STION 4:
+    """QUESTION 4:
     En utilisant la librairie matplotlib, on définit graph_solver qui représente la grille : """
 
     def graph_solver(self):

@@ -64,7 +64,7 @@ class Grid():
     def is_sorted(self, grid):  # La fonction vérifie si la grille est triée, c'est-à-dire si les éléments de celle-ci sont triés dans l'ordre croissant. 
         L = []  # On crée une liste vide 
         for i in range(len(grid)):  
-            L = L + grid[i]  # On chercher ici à regrouper tous les éléments de la grille dans une liste afin de pouvoir comparer facilement les cases 
+            L = L + grid[i]  # On chercher ici à concaténer tous les éléments de la grille dans une liste afin de pouvoir comparer facilement les cases 
         for k in range(len(L)-1): # Dans cette boucle, on vérifie si pour chaque élément "k" de la liste, l'élément suivant (k+1) est inférieur. Si c'est le cas, la grille n'est pas triée et la fonction retourne donc False.
             if L[k] > L[k+1]:
                 return (False)
