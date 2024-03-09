@@ -61,14 +61,14 @@ class Grid():
         Checks is the current state of the grid is sorte and returns the answer as a boolean.
         """
    
-    def is_sorted(self, grid):
-        L = []
-        for i in range(len(grid)):
-            L = L + grid[i]
-        for k in range(len(L)-1):
+    def is_sorted(self, grid):  # La fonction vérifie si la grille est triée, c'est-à-dire si les éléments de celle-ci sont triés dans l'ordre croissant. 
+        L = []  # On crée une liste vide 
+        for i in range(len(grid)):  
+            L = L + grid[i]  # On chercher ici à regrouper tous les éléments de la grille dans une liste afin de pouvoir comparer facilement les cases 
+        for k in range(len(L)-1): # Dans cette boucle, on vérifie si pour chaque élément "k" de la liste, l'élément suivant (k+1) est inférieur. Si c'est le cas, la grille n'est pas triée et la fonction retourne donc False.
             if L[k] > L[k+1]:
                 return (False)
-        return True
+        return True  # Si l'on ne trouve pas d'élément non trié, alors la fonction retourne True. 
 
         # [1,2,3,4]
     def swap(self, cell1, cell2):
@@ -80,14 +80,14 @@ class Grid():
         cell1, cell2: tuple[int]
             The two cells to swap. They must be in the format (i, j) where i is the line and j the column number of the cell. 
         """
-        if cell1[0] == cell2[0]:
-            if cell1[1] == cell2[1] or cell1[1] == cell2[1]+1 or cell1[1] == cell2[1]-1:
-                self.state[cell1[0]][cell1[1]],self.state[cell2[0]][cell2[1]] = self.state[cell2[0]][cell2[1]],self.state[cell1[0]][cell1[1]]
-        elif cell1[1] == cell2[1]:
-            if cell1[0] == cell2[0] or cell1[0] == cell2[0]+1 or cell1[0] == cell2[0]-1:
-                self.state[cell1[0]][cell1[1]],self.state[cell2[0]][cell2[1]] = self.state[cell2[0]][cell2[1]],self.state[cell1[0]][cell1[1]]
-        else:
-            raise Exception(f"Les cases {cell1} et {cell2} ne peuvent être échangées.")
+        if cell1[0] == cell2[0]:  # Si les deux cases se situent sur la même ligne
+            if cell1[1] == cell2[1] or cell1[1] == cell2[1]+1 or cell1[1] == cell2[1]-1:  # On regarde si les cellules sont adjacentes au niveau des colonnes
+                self.state[cell1[0]][cell1[1]],self.state[cell2[0]][cell2[1]] = self.state[cell2[0]][cell2[1]],self.state[cell1[0]][cell1[1]]  # Si les cellules sont adjacentes, on peut les échanger : a,b = b,a signifie que a prend la valeur de b et b prend la valeur de a. 
+        elif cell1[1] == cell2[1]:  # Deuxième cas : on vérifie sinon si les cases sont dans la même colonne. 
+            if cell1[0] == cell2[0] or cell1[0] == cell2[0]+1 or cell1[0] == cell2[0]-1:  # On regarde de nouveau si les cellules sont adjacentes ou non, ici au niveau des lignes
+                self.state[cell1[0]][cell1[1]],self.state[cell2[0]][cell2[1]] = self.state[cell2[0]][cell2[1]],self.state[cell1[0]][cell1[1]]  # De même, si c'est le cas on échange les cellules
+        else:  # Si les deux cases ne sont ni sur la même ligne, ni sur la même colonne
+            raise Exception(f"Les cases {cell1} et {cell2} ne peuvent être échangées.")  # Alors les cellules ne peuvent être échangées
        
         """
         Executes a sequence of swaps. 
@@ -99,9 +99,9 @@ class Grid():
             So the format should be [((i1, j1), (i2, j2)), ((i1', j1'), (i2', j2')), ...].
         """
        
-    def swap_seq(self, cell_pair_list):
-        for k in cell_pair_list:
-            self.swap(k[0], k[1])
+    def swap_seq(self, cell_pair_list):  # La méthode appplique la méthode swap à une séquence de paires de cellules
+        for k in cell_pair_list:  # On prend une paire de cellule de la liste 
+            self.swap(k[0], k[1])  # On applique la méthode swap sur les deux cellules afin de les permuter
 
     @classmethod
     def grid_from_file(cls, file_name): 

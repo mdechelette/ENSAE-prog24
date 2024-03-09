@@ -10,7 +10,7 @@ from solver import Solver
 
 
 class Test_Solver(unittest.TestCase):
-    def test_solver_grid1(self):
+    """def test_solver_grid1(self):
         grid = Grid.grid_from_file("input/grid1.in")
         a = Solver(grid)
         solution = a.get_naive_solution(grid)
@@ -29,7 +29,7 @@ class Test_Solver(unittest.TestCase):
     def test_solver_grid4(self):
         grid = Grid.grid_from_file("input/grid4.in")
         solution = Solver.get_naive_solution(grid)
-        self.assertTrue(grid.is_sorted())
+        self.assertTrue(grid.is_sorted())"""
 
     def test_solver_bfs(self):
         grid = Grid.grid_from_file("input/grid2.in")

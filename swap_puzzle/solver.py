@@ -14,11 +14,11 @@ class Solver():
     # QUESTION 3 : 
     @staticmethod
     def get_naive_solution(grid: Grid) -> list:
-        retour = []
-        while not grid.is_sorted():
+        retour = []  # On commence par définir une liste vide qui va stocker les étapes de résolution de la grille afin de les renvoyer sous forme de liste
+        while not grid.is_sorted():  # La boucle ne s'arrête pas tant que la grille n'est pas triée
             # on commence par chercher les coordonnées du minimum qui n'est pas à sa place.
             minimum = grid.state[-1][-1]  # on parcourt à l'envers afin de ne pas être bloqué au n°1
-            i_min = grid.m-1
+            i_min = grid.m-1  # On enregistre les coordonnées du minimum trouvé
             j_min = grid.n-1
             for i in range(grid.m):  # on parcourt les lignes
                 for j in range(grid.n):  # on parcourt les colonnes
@@ -31,8 +31,8 @@ class Solver():
             colonne_visee = (minimum-1) % grid.n  # coordonnée de la colonne dans laquelle la case doit être 
             if i_min != ligne_visee:  # si la case ne se situe pas sur la bonne ligne
                 if i_min > ligne_visee:  # si la case est située trop bas par rapport à celle visée
-                    grid.swap((i_min, j_min), (i_min-1, j_min))
-                    retour.append(((i_min, j_min), (i_min-1, j_min)))
+                    grid.swap((i_min, j_min), (i_min-1, j_min))  # on utilise la méthode swap pour échanger les deux cellules
+                    retour.append(((i_min, j_min), (i_min-1, j_min)))  # on ajoute le swap dans la liste "retour" afin d'obtenir la séquence de swap
                 else:  # si la case se situe trop haut par rapport à celle visée. 
                     grid.swap((i_min, j_min), (i_min+1, j_min))
                     retour.append(((i_min, j_min), (i_min+1, j_min)))
@@ -43,7 +43,7 @@ class Solver():
                 else:  # si la case doit être déplacée vers la droite 
                     grid.swap((i_min, j_min), (i_min, j_min+1))
                     retour.append(((i_min, j_min), (i_min, j_min+1)))
-        return retour
+        return retour  # On retourne la liste de séquence des swaps.
   
     """
     QUESTION 3 :
@@ -56,16 +56,16 @@ class Solver():
             """
     
 
-    """QUESTION 4:
+    """QUE STION 4:
     En utilisant la librairie matplotlib, on définit graph_solver qui représente la grille : """
 
     def graph_solver(self):
-        _, ax = plt.subplots()
-        ax.mathshow(self.state, cmap='viridis')  # aide pour matplotlib : https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.matshow.html
+        _, ax = plt.subplots() # aide pour matplotlib : https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.matshow.html
+        ax.mathshow(self.state, cmap='viridis')  # Afficher la grille en utilisant une carte de couleurs bleue
         for i in range(self.n):
             for j in range(self.m):
-                ax.text(j, i, str(self.state[i][j], va='center', ha='center'))
-        plt.show()
+                ax.text(j, i, str(self.state[i][j], va='center', ha='center'))  # Pour chaque case, on y inscrit la valeur de la cellule au centre
+        plt.show()  # Cela permet d'afficher la figure avec la grille.
 
 
     # QUESTION 7 - PARTIE 2 :
