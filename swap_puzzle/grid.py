@@ -257,7 +257,7 @@ class Grid():
 #   Définition de l'heuristique :
     #   On cherche à définir la distance entre une matrice (noeud) et la matrice d'arrivée qui est triée en évaluant leurs différences : pour chaque coordonnées, on code 0 si c'est identique et 1 si c'est différent puis on additionne. 
 
-    def heuristique1(self, grid):
+    def heuristique(self, grid):
         k = 0 # on note k la distance entre la matrice étudiée et la matrice triée (le but)
         for i in range(self.m):
             for j in range(self.n):
