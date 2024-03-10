@@ -315,4 +315,43 @@ class Grid():
                     grille_h = self.to_hashable(nv_grille)
                     dictionnaire[grille_h] = self.to_hashable(grille_observe)
 
-    #définir une fonction cout : f=h+g
+
+
+        #optimisation de A*
+    def heuristique_opti(self, grid):
+        k = 0
+        m = self.m
+        n = self.n
+        f = self.final()
+        f = Grid(m, n, f)
+        for i in range(1, m*n+1):
+            i1, j1 = self.position(i)
+            i2, j2 = f.position(i)
+            k += abs(i1-i2) + abs(j1-j2)
+        return k/2
+
+
+    #On utilise le même code de cheminPlusCourt en changeant l'heuristique
+
+
+    def cheminPlusCourt_opti(self, src):
+        closedList = deque()
+        openList = self.filePrioVide() #la file doit être ordonnée en comparant les heuristiques (les plus faibles)
+        self.InsererFile(openList, 0, 0, src) 
+        src_h = self.to_hashable(src)
+        dst = self.grille_parfaite()
+        dictionnaire = {src_h: None}
+        while openList != []:
+            pop = self.PopminFile(openList)
+            grille_observe = pop[2]
+            closedList.append(grille_observe) #on la met dans la closed liste parce qu'on la visite
+            if grille_observe == dst:
+                self.reconstituerChemin(grille_observe, dictionnaire)
+                return self.reconstituerChemin(grille_observe, dictionnaire)
+            for nv_grille in self.generate_neighbours(grille_observe,'A*') :
+                if nv_grille not in closedList and nv_grille not in openList:
+                    g = pop[1] + 1
+                    c = g + self.heuristique_opti(nv_grille)
+                    self.InsererFile(openList, c, g, nv_grille)
+                    grille_h = self.to_hashable(nv_grille)
+                    dictionnaire[grille_h] = self.to_hashable(grille_observe)
