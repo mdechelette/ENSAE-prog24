@@ -156,32 +156,32 @@ class Graph:
     # QUESTION 8 - PARTIE 2 
     # REDÉFINITION DE LA FONCTION BFS
 
-    def bfs_optimized(self, src, dst, generate=False): 
+    def bfs_optimized(self, src, dst, generate=False):  # On reprend la structure du bfs en la modifiant
         if src == dst:
             return [src]
-        f = deque()
+        f = deque()  # On crée une file pour stocker les chemins à explorer
         f.append([src])
         visited = []
         while f:
-            path = f.popleft()
-            node = path[-1]
-            if node not in visited:
-                neighbours = self.graph.get(node, None)
-                if generate:
-                    neighbours = grid.Grid.from_hashable(node).generate_neighbours(grid.state, 'BFS')
-                    self.add_children(node, neighbours)
-                for t in neighbours:
-                    new_path = list(path)
-                    new_path.append(t)
-                    f.append(new_path)
-                    if t == dst:
+            path = f.popleft()  # On récupère et on retire le premier chemin de la file (on le visite donc on l'enlève)
+            node = path[-1]  # On récupère le dernier noeud du chemin 
+            if node not in visited:  # Si le noeud n'est pas visité 
+                neighbours = self.graph.get(node, None)  # On récupère les voisins du noeud
+                if generate:  # On génère les voisins grâce à la fonction generate_neighbours définie précédemment
+                    neighbours = grid.Grid.from_hashable(node).generate_neighbours(grid.state, 'BFS')  
+                    self.add_children(node, neighbours)  # On ajoute des relations parents-enfants entre chaque noeud et son voisin afin de représenter les connexions entre les noeuds et faciliter le chemin
+                for t in neighbours:  # On itère sur les voisins du noeud
+                    new_path = list(path)  # On crée un nouveau chemin
+                    new_path.append(t)  # On ajoute le voisin dans le chemin 
+                    f.append(new_path)  # On ajoute le nouveau chemin à la file pour l'explorer
+                    if t == dst:  # Si le noeuf correspond à la destination, on retourne le chemin 
                         return new_path
                 visited.append(node)
         return
 
-    # Compléter la fonction bfs nécessite de définir une nouvelle fonction qui génère le graphe de la grille obtenue en swappant 2 cellules adjacentes.
+    # Compléter la fonction bfs nécessite de définir une nouvelle fonction qui permet de représenter les connexions entre un noeud "parent" et son voisin "enfant".
 
-    def add_children(self, parent, list: list):
+    def add_children(self, parent, list: list):  # La fonction itère sur chaque noeud
         for i in list: 
-            self.add_edge(parent, i)
+            self.add_edge(parent, i)  # On ajoute des arêtes 
 
