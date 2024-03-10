@@ -81,13 +81,13 @@ class Solver():
         glouton défini précédemment. """
 
     def get_bfs_solution(grid: Grid) -> list:  # On veut que la fonction prenne en entrée une grille et renvoie une solution sous forme de liste
-        possible_graph = grid.generates_all_possible_grid()
-        src = grid.to_hashable()
-        dst = Grid(grid.m, grid.n).to_hashable()
-        path = possible_graph.bfs(src, dst)
-        solution = Solver.path_to_swap(path)
-        grid.swap_seq(solution)
-        return solution
+        possible_graph = grid.generates_all_possible_grid()  # On obtient un graphe contenant toutes les grilles possibles
+        src = grid.to_hashable()  # On transforme la grille de départ en une grille hachée 
+        dst = Grid(grid.m, grid.n).to_hashable()  # On crée une grille de destination vide de même taille que la grille de départ aussi hachée
+        path = possible_graph.bfs(src, dst)  # On utilise BFS pour trouver un chemin du noeud de départ (src) au noeud d'arrivée (dst)
+        solution = Solver.path_to_swap(path)  # On va définir une nouvelle méthode path_to_swap pour transformer le chemin obtenu en une séquence de swaps
+        grid.swap_seq(solution)  # Finalement, on applique la séquence de swap à la grille d'origine pour trouver la solution
+        return solution  # On retourne la solution d
 
     """ Pour compléter la fonction ci-dessus, il faut en définir une nouvelle qui transforme un chemin obtenu avec la méthode BFS en une séquence de swaps. 
     Paramètres : une liste de noeuds obtenus avec la méthode bfs. 
@@ -95,10 +95,10 @@ class Solver():
 
     def path_to_swap(path: list) -> list:
         solution = []
-        for i in range(1, len(path)):  # Pour chaque élément du chemin obtenu, en partant du deuxième
-            for line in range(len(path[i])):  # Pour chaque ligne
+        for i in range(1, len(path)):  # Pour chaque élément du chemin obtenu, en partant du deuxième (car on cherche à comparer chaque noeud avec son prédécesseur). 
+            for line in range(len(path[i])):  # On itère pour chaque ligne du noeud 
                 for column in range(len(path[i][0])):  # Pour chaque colonne
-                    if path[i][line][column] != path[i-1][line][column]:  # Si la case à changé
+                    if path[i][line][column] != path[i-1][line][column]:  # Si la case a changé
                         #  On cherche alors la case qui a changé
                         for dest_line in range(len(path[i])):  # Pour chaque ligne
                             for dest_column in range(len(path[i][0])):  # Pour chaque colonne
