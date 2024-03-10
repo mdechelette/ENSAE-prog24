@@ -148,11 +148,11 @@ class Grid():
     def generates_all_possible_grid(self):  # Construit le graphe de tous les états possible de la grille
         # Le code ci-dessous génère toutes les grilles possibles avec le contenu 1,2,3,4,5,6...
         grids = []
-        items = list(range(1, self.m*self.n+1))
-        for p in permutations(items):
-            grids.append(Grid(self.m, self.n, [list(p[i*self.n:(i+1)*self.n]) for i in range(self.m)]))
+        items = list(range(1, self.m*self.n+1))  # On crée une liste items qui contient toutes les valeurs inscrites dans la grille --> de 1 à m*n
+        for p in permutations(items):  # Pour chaque permutation des éléments de items 
+            grids.append(Grid(self.m, self.n, [list(p[i*self.n:(i+1)*self.n]) for i in range(self.m)]))  # On ajoute à la liste grids la grille sous forme de liste. C'est une liste de liste où chaque liste intérieure représente une ligne de la grille et chaque élément de la liste représente une case. 
 
-        # On crée un graphe avec toutes les grilles possibles
+        # On crée un graphe avec toutes les grilles possibles à partir des représentations hashables de chaque grille
         graph = Graph([grid.to_hashable() for grid in grids])
 
     # QUESTION 7 - PARTIE 3 
