@@ -114,7 +114,7 @@ class Solver():
         src = grid.to_hashable()
         dst = Grid(grid.m, grid.n).to_hashable()
         search_graph = graph.Graph([src, dst])
-        path = search_graph.bfs(src, dst, True)
+        path = search_graph.bfs_optimized(src, dst, True)
         solution = Solver.path_to_swap(path)
         grid.swap_seq(solution)
         return solution 
