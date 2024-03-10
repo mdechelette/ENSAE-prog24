@@ -322,7 +322,7 @@ class Grid():
         k = 0
         m = self.m
         n = self.n
-        f = self.final()
+        f = self.grille_parfaite()
         f = Grid(m, n, f)
         for i in range(1, m*n+1):
             i1, j1 = self.position(i)

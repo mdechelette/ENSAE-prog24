@@ -22,12 +22,12 @@ numbers = list(range(1, 10))
 random.shuffle(numbers)
 
 # Remplissage de la grille avec un nombre unique dans chaque case
-grid = [[0]*3 for _ in range(3)]
 
+grille = [[0]*3 for _ in range(3)]
 for i in range(3):
     for j in range(3):
         num = numbers[i * 3 + j]
-        grid[i][j] = num
+        grille[i][j] = num
         font = pygame.font.Font(None, 50)
         text = font.render(str(num), True, (0, 0, 0))
         text_rect = text.get_rect(center=(75 + j*50, 75 + i*50))
