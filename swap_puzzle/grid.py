@@ -157,33 +157,33 @@ class Grid():
 
     # QUESTION 7 - PARTIE 3 
         # Calcul du nombre de noeuds et d'arête du graphe créé
-        for i in range(len(grids)):  # pour toutes les grilles 
-            for line in range(self.m):  # pour toutes les lignes 
-                for column in range(self.n):  # pour toutes les colonnes
-                    for line_add, column_add in [(0, 1), (1, 0), (-1, 0), (0, -1)]:  # pour toutes les opérations possibles
-                        if 0 <= line+line_add < self.m and 0 <= column+column_add < self.n:  # si la case est dans la grille 
+        for i in range(len(grids)):  # pour toutes les grilles générées
+            for line in range(self.m):  # pour toutes les lignes de chaque grille
+                for column in range(self.n):  # pour toutes les colonnes de chaque grille
+                    for line_add, column_add in [(0, 1), (1, 0), (-1, 0), (0, -1)]:  # pour toutes les opérations possibles : vers le haut, le bas, la gauche ou la droite
+                        if 0 <= line+line_add < self.m and 0 <= column+column_add < self.n:  # si la case est dans la grille après les opérations 
                             hashable = grids[i].to_hashable()
-                            grids[i].swap((line, column), (line+line_add, column+column_add))
-                            graph.add_edge(hashable, grids[i].to_hashable())
+                            grids[i].swap((line, column), (line+line_add, column+column_add))  # On swap la case actuelle et celle qui résulte des opérations
+                            graph.add_edge(hashable, grids[i].to_hashable())  # On ajoute une arête
         return graph
 
     # QUESTION 8 - PARTIE 1 :
     # On redéfinit une nouvelle fonction qui génère le voisin de la grille
 
     def generate_neighbours(self, grid,mode):
-        result = []
-        for line in range(self.m): 
+        result = []  # On crée une liste vide dans laquelle on met les voisins d
+        for line in range(self.m):  # On itère sur les lignes puis sur les colonnes 
             for column in range(self.n):
-                for line_add, column_add in [(0, 1), (1, 0), (-1, 0), (0, -1)]:
-                    if 0 <= line+line_add < self.m and 0 <= column+column_add < self.n:
-                        new_grid = Grid(self.m, self.n, [list(row) for row in grid])
-                        new_grid.swap((line, column), (line+line_add, column+column_add))
-                        new_grid_hashable = self.to_hashable(new_grid.state)
-                        if new_grid_hashable not in result:
-                            if mode == 'BFS':
-                                result.append(new_grid_hashable)
+                for line_add, column_add in [(0, 1), (1, 0), (-1, 0), (0, -1)]:  # pour toutes les opérations possibles 
+                    if 0 <= line+line_add < self.m and 0 <= column+column_add < self.n:  # si la case résultant de l'opération est bien dans la grille
+                        new_grid = Grid(self.m, self.n, [list(row) for row in grid])  # on définit une nouvelle grille identique à celle de départ
+                        new_grid.swap((line, column), (line+line_add, column+column_add))  # on effectue le swap dans cette nouvelle grille
+                        new_grid_hashable = self.to_hashable(new_grid.state)  # on transforme la grille sous format hashable
+                        if new_grid_hashable not in result:  # si le voisin n'est pas déjà dans la liste de résultats
+                            if mode == 'BFS':  # si le mode utilisé est BFS     
+                                result.append(new_grid_hashable)  # on ajoute le voisin sous forme hashable dans la liste
                             else: 
-                                result.append(new_grid.state)
+                                result.append(new_grid.state)  # sinon on ajoute directement le voisin dans la liste
         return (result)
 
 
